@@ -183,8 +183,17 @@ namespace FinalTerm_project
 
         private void comboBoxMovie_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int indx = comboBoxMovie.SelectedIndex;
-            comboBoxShow.SelectedIndex = indx;
+            string MovieName = comboBoxMovie.SelectedItem.ToString();
+            List<string[]> showTimeList = d1.ShowTimeByMovie(MovieName);
+            
+            comboBoxShow.Items.Clear();
+            comboBoxShow.Items.Add("Select show time...");
+            comboBoxShow.SelectedIndex = 0;
+
+            foreach (string[] info in showTimeList)
+            {
+                comboBoxShow.Items.Add(info[2]);
+            }
             reload_sitStatus();
             load_bookedSits();
         }

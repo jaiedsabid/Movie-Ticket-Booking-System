@@ -95,6 +95,33 @@ namespace FinalTerm_project
             }
         }
 
+        public List<string[]> ShowTimeByMovie(string movie)
+        {
+            string query = String.Format("SELECT * FROM show_time WHERE movie = '{0}'", movie);
+            List<string[]> rData = new List<string[]>();
+
+            try
+            {
+                Connect();
+                MySqlCommand cmd = new MySqlCommand(query, connectify);
+                MySqlDataReader data = cmd.ExecuteReader();
+
+                while (data.Read())
+                {
+                    rData.Add(new string[] { data["id"].ToString(), data["movie"].ToString(), data["time"].ToString() });
+                }
+
+                closeConnection();
+                return rData;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                closeConnection();
+                return rData;
+            }
+        }
+
         public bool chkCustomer_id(string id)
         {
             string chkUsrInfo_query = String.Format("SELECT * FROM customers where id='{0}'", id);
